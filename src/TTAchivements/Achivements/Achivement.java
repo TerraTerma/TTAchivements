@@ -7,20 +7,39 @@ import java.util.Optional;
 import org.bukkit.event.Listener;
 
 import TTAchivements.TTAchivementsPlugin;
+import TTAchivements.Achivements.Types.WilhelmScreamAchivement;
+import TTAchivements.Mech.AchivementData;
+import TTCore.Entity.Living.Human.Player.TTPlayer;
 
 public interface Achivement extends Listener {
 	
-	public static List<Achivement> ACHIVEMENTS = new ArrayList<>();
+	public static final List<Achivement> ACHIVEMENTS = new ArrayList<>();
+	public static final WilhelmScreamAchivement WILHELM_SCREAM = new WilhelmScreamAchivement();
 	
 	public String getName();
 	public Optional<Reward> getReward();
 	public List<String> getDescription();
 	public boolean isRepeatable();
 	
+	public static void loadAchivements(){
+		//INTERFACE NEEDS TO BE IN CLASS LOADER, THIS WILL DO IT
+		System.out.println("loaded achivements");
+	}
+	
 	public static <A extends Achivement> A register(A achivement){
 		TTAchivementsPlugin.getPlugin().getPluginLoader().createRegisteredListeners(achivement, TTAchivementsPlugin.getPlugin());
 		ACHIVEMENTS.add(achivement);
 		return achivement;
+	}
+	
+	public static boolean unlockAchivement(TTPlayer player, Achivement achivement){
+		player.sendMessage("Achivement Unlocked", achivement.getName());
+		AchivementData data = player.getSingleData(AchivementData.class).get();
+		return data.unlockAchivement(achivement);
+	}
+	
+	public static Optional<Achivement> getByName(String name){
+		return ACHIVEMENTS.stream().filter(a -> a.getName().equals(name)).findFirst();
 	}
 
 }

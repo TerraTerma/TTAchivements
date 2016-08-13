@@ -12,7 +12,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import TTAchivements.TTAchivementsPlugin;
 import TTAchivements.Achivements.Achivement;
 import TTAchivements.Achivements.Reward;
 import TTCore.Entity.Living.Human.Player.TTPlayer;
@@ -63,7 +62,7 @@ public class WilhelmScreamAchivement implements Achivement {
 		if(opAttack.isPresent()){
 			AttackData data = opAttack.get();
 			ATTACKDATA.remove(data);
-			data.getAttacker().sendMessage(TTAchivementsPlugin.getPlugin(), getAchivedMessage());
+			Achivement.unlockAchivement(data.getAttacker(), this);
 		}
 	}
 	
