@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 
 import TTAchivements.TTAchivementsPlugin;
@@ -25,11 +27,19 @@ public interface Achivement extends Listener {
 	
 	public static void loadAchivements(){
 		//INTERFACE NEEDS TO BE IN CLASS LOADER, THIS WILL DO IT
-		System.out.println("loaded achivements");
+		String achivements = null;
+		for(Achivement ach : ACHIVEMENTS){
+			if(achivements == null){
+				achivements = ach.getName();
+			}else{
+				achivements = achivements + ", " + ach.getName(); 
+			}
+		}
+		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "loaded " + ACHIVEMENTS.size() + " achivements \n " + achivements);
 	}
 	
 	public static <A extends Achivement> A register(A achivement){
-		TTAchivementsPlugin.getPlugin().getPluginLoader().createRegisteredListeners(achivement, TTAchivementsPlugin.getPlugin());
+		TTAchivementsPlugin.getPlugin().getServer().getPluginManager().registerEvents(achivement, TTAchivementsPlugin.getPlugin());
 		ACHIVEMENTS.add(achivement);
 		return achivement;
 	}

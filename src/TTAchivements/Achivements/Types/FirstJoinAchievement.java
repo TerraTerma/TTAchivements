@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import TTAchivements.Achivements.Achivement;
@@ -25,7 +27,7 @@ public class FirstJoinAchievement implements Achivement{
 
 	@Override
 	public List<String> getDescription() {
-		return Arrays.asList("Achieve this on FIrst join.");
+		return Arrays.asList("Achieve this by joining the server");
 	}
 
 	@Override
@@ -33,11 +35,12 @@ public class FirstJoinAchievement implements Achivement{
 		return false;
 	}
 	
-	@EventHandler
-	public void onJoin(PlayerJoinEvent e){
-		TTPlayer p = (TTPlayer) e.getPlayer();
-		if (!p.getPlayer().hasPlayedBefore()){
-			Achivement.unlockAchivement(p, this);
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onJoin(PlayerJoinEvent event){
+		System.out.println("player join");
+		Player bPlayer = event.getPlayer();
+		if (!bPlayer.hasPlayedBefore()){
+			Achivement.unlockAchivement(TTPlayer.getPlayer(bPlayer), this);
 		}
 	}
 

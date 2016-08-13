@@ -2,3 +2,4 @@ name: TTAchivement
 main: TTAchivements.TTAchivementsPlugin
 version: 0.1
 description: Adds achievements.
+depend: [TTCore]
