@@ -16,7 +16,6 @@ public class Reward {
 	public Reward(double cash){
 		MONEY = cash;
 	}
-	
 	public Reward(ItemStack item, double cash){
 		ITEM = item;
 		MONEY = cash;

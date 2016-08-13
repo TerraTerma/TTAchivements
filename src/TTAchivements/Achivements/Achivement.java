@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.bukkit.event.Listener;
 
 import TTAchivements.TTAchivementsPlugin;
+import TTAchivements.Achivements.Types.FirstJoinAchievement;
 import TTAchivements.Achivements.Types.WilhelmScreamAchivement;
 import TTAchivements.Mech.AchivementData;
 import TTCore.Entity.Living.Human.Player.TTPlayer;
@@ -14,7 +15,8 @@ import TTCore.Entity.Living.Human.Player.TTPlayer;
 public interface Achivement extends Listener {
 	
 	public static final List<Achivement> ACHIVEMENTS = new ArrayList<>();
-	public static final WilhelmScreamAchivement WILHELM_SCREAM = new WilhelmScreamAchivement();
+	public static final WilhelmScreamAchivement WILHELM_SCREAM = register(new WilhelmScreamAchivement());
+	public static final FirstJoinAchievement FIRST_JOIN = register(new FirstJoinAchievement());
 	
 	public String getName();
 	public Optional<Reward> getReward();
@@ -33,7 +35,7 @@ public interface Achivement extends Listener {
 	}
 	
 	public static boolean unlockAchivement(TTPlayer player, Achivement achivement){
-		player.sendMessage("Achivement Unlocked", achivement.getName());
+		player.sendMessage(TTAchivementsPlugin.getPlugin(), "You have unlocked the achievement " + achivement.getName());
 		AchivementData data = player.getSingleData(AchivementData.class).get();
 		return data.unlockAchivement(achivement);
 	}
