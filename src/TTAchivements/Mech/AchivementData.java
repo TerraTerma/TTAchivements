@@ -46,7 +46,7 @@ public class AchivementData implements SavableData, PlayerData {
 				}
 			});
 		}
-		return false;
+		return true;
 	}
 
 }
